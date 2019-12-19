@@ -1,0 +1,44 @@
+1、RigidBody组件的Is Kinematic属性打上勾（设为true，使其不受物理引擎驱动，Wall是为了防止其移动，Person是为了防止其受到力不断旋转）
+.is kinematic 是否开启动力学，开启此项，物体不受力的作用
+2、通过Transform组件移动物体
+function Update() {
+ 
+//导弹相对于战斗机Fighter以ShootSpeed 的速度向前运动,Vector3.forward在此时表示导弹的正前方
+ 
+transform.Translate(Vector3.forward * ShootSpeed * Time.deltaTime, Fighter.transform);
+}
+
+
+通过Vector3.MoveTowards()移动物体
+using UnityEngine;
+using System.Collections;
+public class YellowMove : MonoBehaviour {
+    public int MoveSpeed = 10;
+    Vector3 target;
+ 
+     void Start () {
+        target = new Vector3(20, transform.position.y, 20);
+     }
+ 
+     void Update () {
+        transform.position = Vector3.MoveTowards(transform.position, target, MoveSpeed * Time.deltaTime);
+     }
+}
+
+使用lerp()移动
+using UnityEngine;
+using System.Collections;
+public class YellowMove : MonoBehaviour {
+    public float MoveSpeed = 0.1f;
+    Vector3 Target = new Vector3(20, 20, 20);
+    
+ //控制物体向Target移动
+    void Update () {
+        gameObject.transform.localPosition = new Vector3(
+        Mathf.Lerp(transform.position.x, Target.x, MoveSpeed * Time.deltaTime),
+        Mathf.Lerp(transform.position.y, Target.y, MoveSpeed * Time.deltaTime),
+        Mathf.Lerp(transform.position.z, Target.z, MoveSpeed * Time.deltaTime));
+    }
+}
+3、碰撞体分为几种:球、立方体、网格、圆柱、胶囊等。
+4、见unity
